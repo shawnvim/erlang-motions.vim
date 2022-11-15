@@ -48,11 +48,11 @@ fun! s:declaration_end(flags, mode, count)
 endfun
 
 fun! s:clause(flags, mode, count)
-  call s:go_to('\(\.\|\%^\|\;\)\_s*\(%.*\n\|\_s\)*\n*\_^\s*\zs[a-z][a-zA-Z_0-9]*(', a:flags, '', a:mode, a:count)
+  call s:go_to('\(\.\|\%^\|\;\)\_s*\(%.*\n\|\_s\)*\n*\_^\zs[a-z][a-zA-Z_0-9]*(', a:flags, '', a:mode, a:count)
 endfun
 
 fun! s:clause_end(flags, mode, count)
-  call s:go_to('\(\.\w\@!\|[\;\.]\_s*\(%.*\n\|\_s\)*\n*\_^\s*[a-z][a-zA-Z_0-9]*(\)', a:flags, 'erlangComment\|erlangString\|erlangSkippableAttributeDeclaration', a:mode, a:count)
+  call s:go_to('\(\.\w\@!\|[\;\.]\_s*\(%.*\n\|\_s\)*\n*\_^\s*[a-z][a-zA-Z_0-9]*(\)', a:flags, 'erlangComment\|erlangString', a:mode, a:count)
 endfun
 
 fun! s:go_to(pattern, flags, skip_syn, mode, count)
@@ -93,6 +93,6 @@ endfunction
 function! s:inside(back, forward)
   execute 'norm h'
   execute 'norm ' . a:forward . a:back
-  call search('->\n\?\s*.', 'We')
+  call search('->\n*\s*.', 'We')
   execute 'norm ' . 'v' . a:forward . 'h'
 endfunction
